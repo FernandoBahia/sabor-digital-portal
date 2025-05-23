@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 const ProductCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,99 +71,117 @@ const ProductCarousel = () => {
         Conheça nossa seleção de peixes frescos e frutos do mar direto do mar para sua mesa
       </p>
       
-      {/* Carousel Container */}
-      <div className="relative overflow-hidden rounded-xl shadow-lg bg-white border border-blue-100">
-        <div 
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {produtos.map((produto) => (
-            <div key={produto.id} className="w-full flex-shrink-0">
-              <div className="grid md:grid-cols-2">
-                {/* Content */}
-                <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
-                  <span className="text-sm font-semibold text-blue-700 mb-2">Produto selecionado</span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-blue-900 mb-3">
-                    {produto.nome}
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    {produto.descricao}
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 mb-6">
-                    <div>
-                      <span className="block text-sm text-gray-500">Preço</span>
-                      <span className="text-2xl font-bold text-blue-700">
-                        {produto.preco}
-                      </span>
-                    </div>
-                    <div className="h-10 w-px bg-gray-200 hidden sm:block"></div>
-                    <div>
-                      <span className="block text-sm text-gray-500">Disponibilidade</span>
-                      <span className="flex items-center text-green-600">
-                        <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-                        Em estoque
-                      </span>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <Button className="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white rounded-full font-medium px-8 py-2.5">
-                      Encomendar agora
-                    </Button>
-                    <div className="text-sm text-gray-500">
-                      <span className="block">Compra mínima pode ser aplicada</span>
-                      <span>Entregas para Florianópolis e região</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Image */}
-                <div className="relative h-64 md:h-auto order-1 md:order-2">
-                  <img 
-                    src={produto.imagem} 
-                    alt={produto.nome}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                </div>
+      {/* Produto em destaque */}
+      <Card className="relative mb-8 overflow-hidden bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-blue-100 border">
+        <div className="grid md:grid-cols-2 gap-0">
+          {/* Imagem do produto */}
+          <div className="h-64 md:h-auto relative">
+            <img 
+              src={produtos[currentIndex].imagem} 
+              alt={produtos[currentIndex].nome}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-bl from-transparent to-black/30"></div>
+          </div>
+          
+          {/* Detalhes do produto */}
+          <div className="p-6 md:p-8 flex flex-col justify-center">
+            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-1 rounded-full mb-3">
+              Produto em destaque
+            </span>
+            <h3 className="text-xl md:text-2xl font-bold text-blue-900 mb-2">
+              {produtos[currentIndex].nome}
+            </h3>
+            <p className="text-gray-600 mb-4">
+              {produtos[currentIndex].descricao}
+            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <span className="text-2xl font-bold text-blue-700">
+                {produtos[currentIndex].preco}
+              </span>
+              <div className="flex items-center text-green-600">
+                <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                <span className="text-sm">Em estoque</span>
               </div>
             </div>
+            <div className="mt-6">
+              <Button className="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white">
+                Encomendar agora
+              </Button>
+              <div className="mt-3 text-xs text-gray-500">
+                Entrega para Florianópolis e região
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+      
+      {/* Navegação do carrossel */}
+      <div className="flex justify-center gap-2 md:gap-4">
+        <Button 
+          variant="outline"
+          size="icon"
+          className="rounded-full border-blue-200 hover:border-blue-400 shadow-sm hover:shadow w-10 h-10"
+          onClick={prevSlide}
+        >
+          <ChevronLeft className="h-5 w-5 text-blue-700" />
+        </Button>
+        <div className="flex items-center gap-2">
+          {produtos.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => goToSlide(idx)}
+              className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
+                currentIndex === idx ? "bg-blue-700 scale-125" : "bg-gray-300"
+              }`}
+              aria-label={`Ir para slide ${idx + 1}`}
+            />
           ))}
         </div>
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-full border-blue-200 hover:border-blue-400 shadow-sm hover:shadow w-10 h-10"
+          onClick={nextSlide}
+        >
+          <ChevronRight className="h-5 w-5 text-blue-700" />
+        </Button>
       </div>
-
-      {/* Navigation Buttons */}
-      <Button
-        onClick={prevSlide}
-        variant="outline"
-        size="icon"
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white border-2 border-blue-200 hover:border-blue-400 shadow-lg z-10 w-12 h-12 rounded-full transition-all duration-300"
-      >
-        <ChevronLeft className="h-6 w-6 text-blue-700" />
-      </Button>
       
-      <Button
-        onClick={nextSlide}
-        variant="outline"
-        size="icon"
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white border-2 border-blue-200 hover:border-blue-400 shadow-lg z-10 w-12 h-12 rounded-full transition-all duration-300"
-      >
-        <ChevronRight className="h-6 w-6 text-blue-700" />
-      </Button>
-
-      {/* Dots Indicator */}
-      <div className="flex justify-center space-x-2 mt-6">
-        {produtos.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex 
-                ? 'bg-blue-700 scale-125' 
-                : 'bg-gray-300 hover:bg-blue-300'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+      {/* Produtos em grade */}
+      <div className="mt-16">
+        <h3 className="text-xl md:text-2xl font-semibold text-blue-900 mb-6 text-center">
+          Outros produtos disponíveis
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {produtos.filter((_, idx) => idx !== currentIndex).slice(0, 3).map((produto) => (
+            <Card key={produto.id} className="overflow-hidden hover:shadow-md transition-shadow border-blue-50">
+              <div className="aspect-video overflow-hidden">
+                <img 
+                  src={produto.imagem}
+                  alt={produto.nome}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <CardContent className="p-4">
+                <h4 className="font-semibold text-lg text-blue-900">{produto.nome}</h4>
+                <p className="text-gray-600 text-sm mt-1 mb-3 line-clamp-2">{produto.descricao}</p>
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-blue-700">{produto.preco}</span>
+                  <div className="flex items-center text-green-600 text-xs">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 mr-1"></div>
+                    <span>Em estoque</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-50">
+            Ver todos os produtos
+          </Button>
+        </div>
       </div>
     </div>
   );
