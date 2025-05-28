@@ -1,0 +1,63 @@
+
+<!-- Seção de Produtos Atualizada -->
+<section class="section products-section" id="produtos">
+    <div class="container">
+        <div class="section-title">
+            <h2>Nossos Produtos</h2>
+            <p>Conheça nossa seleção de peixes frescos e frutos do mar direto do mar para sua mesa</p>
+        </div>
+        
+        <!-- Produto em destaque -->
+        <div class="featured-product">
+            <div class="product-card featured">
+                <div class="product-image">
+                    <img id="featured-image" src="https://images.unsplash.com/photo-1498654200943-1088dd4438ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Produto em destaque">
+                    <div class="product-badge">Produto em destaque</div>
+                </div>
+                
+                <div class="product-details">
+                    <h3 id="featured-name">Pescada Amarela</h3>
+                    <p id="featured-description">Peixe de água salgada, saboroso e versátil para diversos preparos culinários</p>
+                    <div class="product-info">
+                        <span class="price" id="featured-price">R$ 49,90/kg</span>
+                        <div class="stock-status">
+                            <div class="stock-indicator"></div>
+                            <span>Em estoque</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary product-btn">Encomendar agora</button>
+                    <div class="delivery-info">Entrega para Florianópolis e região</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navegação do carrossel -->
+        <div class="carousel-navigation">
+            <button class="nav-btn prev-btn" onclick="prevProduct()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="carousel-dots">
+                <span class="dot active" onclick="currentProduct(0)"></span>
+                <span class="dot" onclick="currentProduct(1)"></span>
+                <span class="dot" onclick="currentProduct(2)"></span>
+                <span class="dot" onclick="currentProduct(3)"></span>
+                <span class="dot" onclick="currentProduct(4)"></span>
+                <span class="dot" onclick="currentProduct(5)"></span>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextProduct()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        
+        <!-- Outros produtos em grade -->
+        <div class="other-products">
+            <h3>Outros produtos disponíveis</h3>
+            <div class="products-grid" id="products-grid">
+                <!-- Produtos serão inseridos aqui via JavaScript -->
+            </div>
+            <div class="view-all">
+                <button class="btn btn-outline">Ver todos os produtos</button>
+            </div>
+        </div>
+    </div>
+</section>
